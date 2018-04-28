@@ -2,7 +2,6 @@ import {combineReducers} from 'redux'
 import {
     BILLS,
     BILL_DETAILS,
-    REVENUE,
     PAGE_CLICKS,
     MOVIE_CLICKS,
     TOP10_HALLS_WITH_MAX_REVENUE,
@@ -14,7 +13,6 @@ import {
 const initialState = {
     bills: [],
     billDetails: {},
-    revenue: {},
     pageClicks: {},
     movieClicks: [],
     top10_halls_with_max_revenue: [],
@@ -76,12 +74,6 @@ export const data = (state = initialState, action) =>{
             };
             break;
 
-        case REVENUE:
-            state={
-                ...state,
-                revenue: action.payload
-            };
-            break;
         case PAGE_CLICKS:
             state={
                 ...state,
@@ -123,6 +115,7 @@ export const data = (state = initialState, action) =>{
                 reviewsOnMovies: action.payload
             };
             break;
+
         default:
             return state;
     }

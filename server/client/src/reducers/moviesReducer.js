@@ -31,18 +31,21 @@ export const data = (state =  {
                 moviesList:action.payload
             };
             break;
+
         case "HALLS_LIST":
             state= {
                 ...state,
                 hallsList:action.payload
             };
             break;
+
         case "GENRE_LIST":
             state= {
                 ...state,
                 genreList:action.payload
             };
             break;
+            
         case "REVENUE_LIST":
             console.log("in revenue list"+JSON.stringify(action.payload));
             state= {
@@ -58,6 +61,7 @@ export const data = (state =  {
                 movieInfo:action.payload
             };
             break;
+
         case "USER_LIST":
             console.log("in user list"+JSON.stringify(action.payload));
             state= {

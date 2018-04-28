@@ -8,9 +8,11 @@ router.get('/latest10Bills', function(req, res, next) {
   let userQuery = `select userId, userType, firstName from fandango.Users
                    where userId = ${req.query.userId}`;
   let sqlQuery = `Select b.billingId, b.date, b.ticketCount, b.amount, b.tax,
-                  b.status, b.movieId, b.hallId, u.userId, u.userType, u.firstName, u.lastName
+                  b.status, b.movieId, b.hallId, u.userId, u.userType,
+                  u.firstName, u.lastName, m.photosUrl, m.title
                   from fandango.Billing b inner join fandango.Users u
-                  on b.userId = u.userId `;
+                  on b.userId = u.userId inner join fandango.Movies m
+                  on b.movieId = m.movieId `;
   let orderBy = ` order by date desc limit 10 `;
   let andClause = ` AND u.userId = `;
   mysql.fetchData(function(err, userResult) {
@@ -38,9 +40,10 @@ router.get('/billSearch', function(req, res, next) {
   let userQuery = `select userId, userType, firstName from fandango.Users
                    where userId = ${req.query.userId}`;
   let sqlQuery = `Select b.billingId, b.date, b.amount, b.tax, b.ticketCount,
-                  b.movieId, u.userId, u.userType, u.firstName, u.lastName from
-                  fandango.Billing b inner join fandango.Users u
-                  on b.userId = u.userId WHERE `;
+                  b.movieId, u.userId, u.userType, u.firstName, u.lastName,
+                  m.photosUrl, m.title from fandango.Billing b inner join
+                  fandango.Users u on b.userId = u.userId inner join
+                  fandango.Movies m on b.movieId = m.movieId WHERE `;
   if ("date" in req.query) {
     sqlQuery = sqlQuery + ` b.date like "${req.query.date.concat("%")}" `;
   } else if("month" in req.query) {

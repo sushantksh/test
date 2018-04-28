@@ -2,7 +2,6 @@ import axios from "axios/index";
 import {
     BILLS,
     BILL_DETAILS,
-    REVENUE,
     PAGE_CLICKS,
     MOVIE_CLICKS,
     TOP10_HALLS_WITH_MAX_REVENUE,
@@ -13,9 +12,7 @@ import {
 
 export function addMovieHall(hallData){
     return dispatch => {
-console.log("inside add movie Hall data",hallData);
         return axios.post('/admin/addMovieHall',hallData).then((response)=>{
-			console.log("inside add movie Hall",response.data);
             dispatch(addMvHall(response.data));
         });
     }
@@ -109,19 +106,8 @@ export const getBill = (billingId) => async dispatch => {
     dispatch({ type: BILL_DETAILS, payload: res.data.result });
 };
 
-export const getRevenueByMovie = (movieId) => async dispatch => {
-    const res = await axios.get('/adminSqlRoutes/getRevenueByMovie',
-        { params: { movieId: movieId }});
-    dispatch({ type: REVENUE, payload: res.data.result });
-};
-
-export const getRevenueByHall = (hallId) => async dispatch => {
-    const res = await axios.get('/adminSqlRoutes/getRevenueByHall',
-        { params: { hallId: hallId }});
-    dispatch({ type: REVENUE, payload: res.data.result });
-};
-
 /*bills end*/
+
 /*
 * graph actions start*/
 export const updatePageClick = (pageName) => async dispatch => {
@@ -162,6 +148,7 @@ export const getCityWiseRevenuePerYearForMovie = (movieId) => async dispatch => 
         });
     dispatch({ type: CITYWISE_REVENUE_PERYEAR_FOR_MOVIE, payload: res.data.result });
 };
+
 export const getReviewsOnMovies = () => async dispatch => {
     const res = await axios.get('/adminSqlRoutes/reviewsOnMovies');
     dispatch({ type: REVIEWS_ON_MOVIES, payload: res.data.result });

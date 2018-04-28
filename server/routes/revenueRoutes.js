@@ -5,7 +5,7 @@ var mysql = require('./mysql');
 // Revenue by Movie
 router.get('/getRevenueByMovie', function(req, res, next) {
   console.log(req.query);
-  let sqlQuery = `Select m.title, sum(b.amount * b.ticketCount) as totalRevenue
+  let sqlQuery = `Select m.title, m.photosUrl, m.releaseDate, sum(b.amount * b.ticketCount) as totalRevenue
                   from Billing b inner join Movies m on m.movieId = b.movieId
                   where b.movieId=${req.query.movieId} and b.status="booked" group by m.title`;
   mysql.fetchData(function(err, results) {
@@ -20,7 +20,8 @@ router.get('/getRevenueByMovie', function(req, res, next) {
 // Revenue by Hall
 router.get('/getRevenueByHall', function(req, res, next) {
   console.log(req.query);
-  let sqlQuery = `Select mh.hallName, sum(b.amount * b.ticketCount) as totalRevenue
+  let sqlQuery = `Select mh.hallName, mh.state, mh.city, mh.zipcode,
+                  sum(b.amount * b.ticketCount) as totalRevenue
                   from Billing b inner join MovieHall mh on mh.hallId = b.hallId
                   where mh.hallId=${req.query.hallId} and b.status="booked" group by mh.hallName`;
   mysql.fetchData(function(err, results) {

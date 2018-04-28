@@ -11,9 +11,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
     Row,
     Col,
+    Container,
     Card,
     CardHeader,
     CardBody,
+    CardImg,
+    CardTitle,
+    CardSubtitle,
+    CardText,
     Table,
     Pagination,
     PaginationItem,
@@ -33,10 +38,18 @@ import {
     Dropdown
 } from 'reactstrap';
 
-const optionsStyle = {
-  maxWidth: 255,
-  marginRight: 'auto'
-};
+const style = {
+          color: 'white',
+          fontStyle: 'oblique',
+          fontSize: '15px',
+          fontWeight: 800
+        };
+const pstyle = {
+          color: 'black',
+          fontStyle: 'oblique',
+          fontSize: '12px',
+          fontWeight: 800
+        };
 
 class Bills extends Component {
 
@@ -95,66 +108,76 @@ class Bills extends Component {
     return (
       <MuiThemeProvider>
         <div className="container-fluid">
-          <br/><br/>
-          <p>Search by Date/Month</p>
-          <div>
-              <DatePicker
-                onChange={this.handleChange}
-                autoOk={this.state.autoOk}
-                floatingLabelText="Select Date"
-                defaultDate={this.state.startDate}
-                disableYearSelection={this.state.disableYearSelection}
-              />
-          </div>
-          <Button color="primary" size="sm" onClick={this.getBillsByMonth}>
-              Filter by Month
-          </Button>
-          {' '}
-          <Button color="primary" size="sm" onClick={this.getBillsByDate}>
-              Filter by Date
-          </Button>
-          <br/>
-          <br/>
-          <Table>
-             <thead>
-               <tr>
-                 <th>#</th>
-                 <th>First Name</th>
-                 <th>Last Name</th>
-                 <th>Ticket Count</th>
-                 <th>Amount ($)</th>
-                 <th>Tax (%)</th>
-                 <th>Purchase Date</th>
-                 <th>View Details</th>
-               </tr>
-            </thead>
-            <tbody>
-               {
-                 this.props.admin.data.bills.map((billInfo, index) => (
-                   <tr key = {index}>
-                       <th>{index+1}</th>
-                       <td>{billInfo.firstName}</td>
-                       <td>{billInfo.lastName}</td>
-                       <td>{billInfo.ticketCount}</td>
-                       <td>{billInfo.amount}</td>
-                       <td>{billInfo.tax}</td>
-                       <td><Moment>{billInfo.date}</Moment></td>
-                       <td>
-                          <span>
-                                <Link
-                                    to={`/purchase-details/${billInfo.billingId}`}
-                                    key={billInfo.billingId}
+          <Row>
+            <br/><br/>
+            <h1 style={{fontFamily: "cursive"}}>Purchase History</h1>
+            <div>
+                <DatePicker
+                  mode="landscape"
+                  onChange={this.handleChange}
+                  autoOk={this.state.autoOk}
+                  floatingLabelText="Select Date"
+                  defaultDate={this.state.startDate}
+                  disableYearSelection={this.state.disableYearSelection}
+                />
+            </div>
+            <Button color="primary" size="sm" onClick={this.getBillsByMonth}>
+                <p style={style}>Filter by Month</p>
+            </Button>
+            {' '}
+            <Button color="primary" size="sm" onClick={this.getBillsByDate}>
+                <p style={style}>Filter by Date</p>
+            </Button>
+            <br/>
+            <br/>
+            <Table>
+               <thead>
+                 <tr>
+                   <th>#</th>
+                   <th>Movie</th>
+                   <th>First Name</th>
+                   <th>Last Name</th>
+                   <th>Ticket Count</th>
+                   <th>Amount ($)</th>
+                   <th>Tax (%)</th>
+                   <th>Purchase Date</th>
+                   <th>View Details</th>
+                 </tr>
+              </thead>
+              <tbody>
+                 {
+                   this.props.admin.data.bills.map((billInfo, index) => (
+                     <tr key = {index}>
+                         <th>{index+1}</th>
+                         <Card>
+                           <CardTitle><p style={pstyle}>{billInfo.title}</p></CardTitle>
+                           <img width="60%" src={billInfo.photosUrl} alt="Card image cap" />
+                         </Card>
+                         <td>{billInfo.firstName}</td>
+                         <td>{billInfo.lastName}</td>
+                         <td>{billInfo.ticketCount}</td>
+                         <td>{billInfo.amount}</td>
+                         <td>{billInfo.tax}</td>
+                         <td><Moment parse="YYYY-MM-DD HH:mm">{billInfo.date}</Moment></td>
+                         <td>
+                            <Button color="primary" size="sm">
+                                  <Link
+                                      to={`/purchase-details/${billInfo.billingId}`}
+                                      key={billInfo.billingId}
                                   >
-                                View
-                              </Link>
-                          </span>
-                        </td>
-                    </tr>
-                 ))
-               }
-             </tbody>
-          </Table>
-      </div>
+                                  <p style={style}>
+                                    View Order Details
+                                  </p>
+                                  </Link>
+                            </Button>
+                          </td>
+                      </tr>
+                   ))
+                 }
+               </tbody>
+            </Table>
+          </Row>
+        </div>
     </MuiThemeProvider>
     );
   }

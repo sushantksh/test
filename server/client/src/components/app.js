@@ -2,22 +2,26 @@ import React, { Component } from 'react';
 import { NavLink, BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+
 import Header from './Header';
 import Landing from './Landing';
 import Secure from './Secure';
 import MovieView from './MovieHall/MovieView';
-import AddMovieHall from './admin/AddMovieHall';
-import SUDMovieHall from './admin/SearchUpdateDeleteMovieHall';
-import AdminDashboard from '../components/admin/AdminDashboard';
-import Login from './User/Login'
-import Signup from './User/Signup';
-import EditProfile from './User/EditProfile';
-import AdminBillsView from './admin/Bills';
-import AdminBillInfoView from './admin/DisplayBill';
 import MovieDetails from './MovieDetails';
 import AddMovie from './AddMovie';
 import Revenue from './Revenue';
 import AddMovieToHall from './AddMovieTOHall';
+
+import Login from './User/Login'
+import Signup from './User/Signup';
+import EditProfile from './User/EditProfile';
+
+import AddMovieHall from './admin/AddMovieHall';
+import SUDMovieHall from './admin/SearchUpdateDeleteMovieHall';
+import AdminDashboard from './admin/AdminDashboard';
+import AdminBillsView from './admin/Bills';
+import AdminBillInfoView from './admin/DisplayBill';
+import HallAndMovieRevenues from './admin/HallAndMovieRevenues';
 
 import '../app.css';
 import '../adminDashboard.css';
@@ -60,10 +64,11 @@ class App extends Component {
               <Route exact path="/User/EditProfile" component={EditProfile} />
               <Route exact path="/purchase-history/:userId" component={AdminBillsView} />
               <Route exact path="/purchase-details/:billingId" component={AdminBillInfoView} />
+              <Route exact path="/addMovieToHall" component={AddMovieToHall} />
               <Route exact path="/movie-details/:movie_id" component={MovieDetails} />
               <Route exact path="/add-movie" component={AddMovie} />
               <Route exact path="/revenue" component={Revenue} />
-              <Route exact path="/addMovieToHall" component={AddMovieToHall}
+              <Route exact path="/hallAndMovieRevenue" component={HallAndMovieRevenues} />
             />
             <Secure />
           </div>
